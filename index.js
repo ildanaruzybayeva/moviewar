@@ -14,15 +14,21 @@ const fetchData = async searchTerm => {
 };
 
 createAutocomplete({
-  root: document.querySelector('.autocomplete')
-});
+  root: document.querySelector('.autocomplete'),
+  renderOption(movie) {
+    const imgSRC = movie.Poster === 'N/A' ? '' : movie.Poster;
+    return `
+    <img src="${imgSRC}" />
+    ${movie.Title} (${movie.Year})
+    `;
+  },
+  onOptionSelect(movie) {
+    onMovieSelect(movie);
+  },
 
-createAutocomplete({
-  root: document.querySelector('.autocomplete-two')
-});
-
-createAutocomplete({
-  root: document.querySelector('.autocomplete-three')
+  inputValue(movie) {
+    return movie.Title;
+  }
 });
 
 const onMovieSelect = async movie => {
